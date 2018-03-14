@@ -1,0 +1,41 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: X-Toy
+file_extensions:
+  - asm
+scope: source.xtoy
+
+contexts:
+  # The prototype context is prepended to all contexts but those setting
+  # meta_include_prototype: false.
+  prototype:
+    - include: comments
+
+  main:
+    # The main context is the initial starting point of our syntax.
+    # Include other contexts from here (or specify them directly).
+    - include: function
+    - include: numbers
+    - include: registers
+    - include: keywords
+
+  function:
+    - match: '\b(add|sub|and|xor|shl|shr|lda|ld|st|ldi|sti|bz|bp|jr|jl|org|ADD|SUB|AND|XOR|SHL|SHR|LDA|LD|ST|LDI|STI|BZ|BP|JR|JL|ORG)\b'
+      scope: entity.name.function.xtoy
+
+  numbers:
+    - match: '\b(?i:(0x\h*))'
+      scope: constant.numeric.hex.xtoy
+
+  registers:
+    - match: '\b(R.)\b'
+      scope: string.quoted.single.xtoy
+
+  keywords:
+    - match: '\b(hlt|HLT|dup|DUP|dw|DW)\b'
+      scope: keyword.xtoy
+
+  comments:
+    - match: ';.*$'
+      scope: comment.line.xtoy
